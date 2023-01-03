@@ -14,11 +14,8 @@ const appartementSchema = mongoose.Schema({
     appartement: {
         type: String,
         required: true,
-        },
-        id_client: {
-            type: Number,
-            required: true,
-            },
+    },
+        
 },
     {
         timestamps:true

@@ -1,16 +1,17 @@
 const asyncHandler = require('express-async-handler');
+const { where } = require('../Models/appartementModel');
 const AppartementSchema = require('../Models/appartementModel');
 
 // method : get
-// url : /api/formation/getallformation
-// access : formation
-// get all formation
+// url : /api/appartement/getallappartement
+// access : appartement
+// get all appartement
 const GetAllAppartement = asyncHandler(async (req, res) => {
     try{
        const data = await AppartementSchema.find()
         res
         .status(200).send(data)
-        .console.log(data)
+        // .console.log("GetAllAppartement",data)
     } catch (error) {
         res.status(400)
         throw new Error(error)
@@ -18,26 +19,24 @@ const GetAllAppartement = asyncHandler(async (req, res) => {
 })
 
 // method : get
-// url : /api/formation/getOneFormation
-// access : formation
-// get one formation
+// url : /api/appartement/getoneappartement
+// access : appartement
+// get one appartement
 const GetOneAppartement = asyncHandler(async (req, res) => {
     const id = req.params.id
 console.log('GetOneAppartement',id);
-    // try{
+    try{
         
-    //      const data = await FormationSchema.findOne({_id:id})
-    //      console.log('dataaaaaaaaaa',data);
-    //     // res.status(200).send(data)
-       
-    // } catch (error) {
-    //     res.status(400)
-    //     throw new Error(error)
-    // }
+         const data = await AppartementSchema.findOne({_id:id})
+        res.status(200).send(data)
+    } catch (error) {
+        res.status(400)
+        throw new Error(error)
+    }
 })
 
 // method : post
-// url : /api/formation/addformation
+// url : /api/appartement/addappartement
 // access : formation
 // add formation
  const AddAppartement = asyncHandler(async (req, res) => {
@@ -49,7 +48,7 @@ console.log('GetOneAppartement',id);
             appartement,
         })
         res.status(200).json(
-            console.log('datatttttt',data)
+            // console.log('datatttttt',data)
         )
         }catch(error){
             res.status(400)
@@ -59,47 +58,39 @@ console.log('GetOneAppartement',id);
  })
 
  // method : update
-// url : /api/formation/updateFormation
-// access : formation
-// update Formation
+// url : /api/appartement/updateappartement
+// access : appartement
+// update appartement
  const UpdateAppartement = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
-    console.log('UpdateAppartement',id);
-    // const { title, date1, date2, campo } = req.body
-    // if(FormationSchema){
-    //     try {
-    //         await FormationSchema.updateOne({
-    //         title:title,
-    //         date1:date1,
-    //         date2:date2,
-    //         campo:campo,
-    //         },{where:{id}})
-    //         res.status(200).send({message:"update formation success"})
-    //     } catch (error) {
-    //         res.status(400)
-    //         throw new Error(error)
-    //     }
-    // }else{
-    //     res.status(400)
-    //     throw new Error("Please add a text field")
-    // }
+    const { imeuble, etage, appartement } = req.body
+        try{
+            const data = await AppartementSchema.findOne({_id: id})
+            data.imeuble = imeuble
+            data.etage = etage
+            data.appartement = appartement
+            await data.save()
+           res.status(200).send(data)
+       } catch (error) {
+           res.status(400)
+           throw new Error(error)
+       }
 })
 
 //  // method : delete
-// // url : /api/formation/deleteFormation
-// // access : formation
-// // delete Formation
+// // url : /api/appartement/deleteappartement
+// // access : appartement
+// // delete appartement
 const DeleteAppartement = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
-    console.log('DeleteAppartement',id);
-    // try {
-    //      await FormationSchema.destroy({where:{id}})
-    //     res.status(200).send({message:"delete formation success"})
-    // } catch (error) {
-    //     console.log(error)
-    //     res.status(400)
-    //     throw new Error(error)
-    // }
+    try {
+         await AppartementSchema.findOneAndRemove({ _id:id})    
+        res.status(200).send({message:"delete formation success"})
+    } catch (error) {
+        console.log(error)
+        res.status(400)
+        throw new Error(error)
+    }
 })
 
 module.exports  = {AddAppartement,GetOneAppartement,UpdateAppartement,DeleteAppartement,GetAllAppartement}

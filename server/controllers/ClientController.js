@@ -24,17 +24,15 @@ const GetAllClient = asyncHandler(async (req, res) => {
 // get one formation
 const GetOneClient = asyncHandler(async (req, res) => {
     const id = req.params.id
-console.log('GetOneClient',id);
-    // try{
-        
-    //      const data = await FormationSchema.findOne({_id:id})
-    //      console.log('dataaaaaaaaaa',data);
-    //     // res.status(200).send(data)
-       
-    // } catch (error) {
-    //     res.status(400)
-    //     throw new Error(error)
-    // }
+    // console.log('GetOneClient',id);
+        try{
+            
+             const data = await ClientSchema.findOne({_id:id})
+            res.status(200).send(data)
+        } catch (error) {
+            res.status(400)
+            throw new Error(error)
+        }
 })
 
 // method : post
@@ -50,9 +48,9 @@ console.log('GetOneClient',id);
             tele,
             id_appartement,
         })
-        res.status(200).json(
-            console.log('datatttttt',data)
-        )
+        res.status(200).send(data)
+        // console.log('datatttttt',data)
+        
         }catch(error){
             res.status(400)
             console.log(error)
@@ -66,25 +64,21 @@ console.log('GetOneClient',id);
 // update Formation
  const UpdateClient = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
-    console.log('UpdateClient',id);
-    // const { title, date1, date2, campo } = req.body
-    // if(FormationSchema){
-    //     try {
-    //         await FormationSchema.updateOne({
-    //         title:title,
-    //         date1:date1,
-    //         date2:date2,
-    //         campo:campo,
-    //         },{where:{id}})
-    //         res.status(200).send({message:"update formation success"})
-    //     } catch (error) {
-    //         res.status(400)
-    //         throw new Error(error)
-    //     }
-    // }else{
-    //     res.status(400)
-    //     throw new Error("Please add a text field")
-    // }
+    const { name, cin, tele, id_appartement } = req.body
+    
+
+        try{
+            const data = await ClientSchema.findOne({_id: id})
+            data.name = name
+            data.cin = cin
+            data.id_appartement = id_appartement
+            data.tele = tele
+            await data.save()
+           res.status(200).send(data)
+       }catch (error) {
+           res.status(400)
+           throw new Error(error)
+       }
 })
 
 //  // method : delete
@@ -93,15 +87,14 @@ console.log('GetOneClient',id);
 // // delete Formation
 const DeleteClient = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
-    console.log('DeleteClient',id);
-    // try {
-    //      await FormationSchema.destroy({where:{id}})
-    //     res.status(200).send({message:"delete formation success"})
-    // } catch (error) {
-    //     console.log(error)
-    //     res.status(400)
-    //     throw new Error(error)
-    // }
+    try {
+         await ClientSchema.findOneAndRemove({ _id:id})    
+        res.status(200).send({message:"delete formation success"})
+    } catch (error) {
+        console.log(error)
+        res.status(400)
+        throw new Error(error)
+    }
 })
 
 module.exports  = {AddClient,GetOneClient,UpdateClient,DeleteClient,GetAllClient}

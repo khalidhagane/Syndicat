@@ -2,9 +2,9 @@ const asyncHandler = require('express-async-handler');
 const PaiementSchema = require('../Models/paiementModel');
 
 // method : get
-// url : /api/formation/getallformation
-// access : formation
-// get all formation
+// url : /api/paiement/getallpaiement
+// access : paiement
+// get all paiement
 const GetAllPaiement = asyncHandler(async (req, res) => {
     try{
        const data = await PaiementSchema.find()
@@ -18,39 +18,37 @@ const GetAllPaiement = asyncHandler(async (req, res) => {
 })
 
 // method : get
-// url : /api/formation/getOneFormation
-// access : formation
-// get one formation
+// url : /api/paiement/getonepaiement
+// access : paiement
+// get one paiement
 const GetOnePaiement = asyncHandler(async (req, res) => {
     const id = req.params.id
-console.log('GetOnePaiement',id);
-    // try{
-        
-    //      const data = await FormationSchema.findOne({_id:id})
-    //      console.log('dataaaaaaaaaa',data);
-    //     // res.status(200).send(data)
-       
-    // } catch (error) {
-    //     res.status(400)
-    //     throw new Error(error)
-    // }
+    console.log('GetOnePaiement',id);
+        try{
+            
+             const data = await PaiementSchema.findOne({_id:id})
+            res.status(200).send(data)
+        } catch (error) {
+            res.status(400)
+            throw new Error(error)
+        }
 })
 
 // method : post
-// url : /api/formation/addformation
-// access : formation
-// add formation
+// url : /api/paiement/addpaiement
+// access : paiement
+// add paiement
  const AddPaiement = asyncHandler(async (req, res) => {
-    const { client, appartement, prix, date } = req.body
+    const { prix, date, id_appartement, id_client } = req.body
     try{
            const data = await PaiementSchema.create({
-            client,
-            appartement,
             prix,
             date,
+            id_appartement,
+            id_client
         })
         res.status(200).json(
-            console.log('datatttttt',data)
+            console.log('datatttttt paiement',data)
         )
         }catch(error){
             res.status(400)
@@ -60,47 +58,41 @@ console.log('GetOnePaiement',id);
  })
 
  // method : update
-// url : /api/formation/updateFormation
-// access : formation
-// update Formation
+// url : /api/paiement/updatepaiement
+// access : paiement
+// update paiement
  const UpdatePaiement = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
-    console.log('UpdatePaiement',id);
-    // const { title, date1, date2, campo } = req.body
-    // if(FormationSchema){
-    //     try {
-    //         await FormationSchema.updateOne({
-    //         title:title,
-    //         date1:date1,
-    //         date2:date2,
-    //         campo:campo,
-    //         },{where:{id}})
-    //         res.status(200).send({message:"update formation success"})
-    //     } catch (error) {
-    //         res.status(400)
-    //         throw new Error(error)
-    //     }
-    // }else{
-    //     res.status(400)
-    //     throw new Error("Please add a text field")
-    // }
+    const { prix, date, id_appartement, id_client } = req.body
+        try{
+            const data = await PaiementSchema.findOne({_id: id})
+            data.prix = prix
+            data.date = date
+            data.id_appartement = id_appartement
+            data.id_client = id_client
+
+            await data.save()
+           res.status(200).send(data)
+       }catch (error) {
+           res.status(400)
+           throw new Error(error)
+       }
 })
 
 //  // method : delete
-// // url : /api/formation/deleteFormation
-// // access : formation
-// // delete Formation
+// // url : /api/paiement/deletepaiement
+// // access : paiement
+// // delete paiement
 const DeletePaiement = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
-    console.log('DeletePaiement',id);
-    // try {
-    //      await FormationSchema.destroy({where:{id}})
-    //     res.status(200).send({message:"delete formation success"})
-    // } catch (error) {
-    //     console.log(error)
-    //     res.status(400)
-    //     throw new Error(error)
-    // }
+    try {
+         await PaiementSchema.findOneAndRemove({ _id:id})    
+        res.status(200).send({message:"delete formation success"})
+    } catch (error) {
+        console.log(error)
+        res.status(400)
+        throw new Error(error)
+    }
 })
 
 module.exports  = {AddPaiement,GetOnePaiement,UpdatePaiement,DeletePaiement,GetAllPaiement}
