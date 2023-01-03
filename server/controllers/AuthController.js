@@ -76,10 +76,11 @@ const Login = asyncHandler(async (req,res, next) => {
 const Regester = asyncHandler(async (req,res) => {
     const hashedPassword = await bcryptjs.hash(process.env.PASSWORD_ME,10)
     const admin = await User.findOne({email:process.env.EMAIL_ME})
-    console.log('admin',admin)
+    // console.log('admin',admin)
     // create user
     if(!admin){
         let user = await User.create({
+            name:process.env.NAME_ME,
             email:process.env.EMAIL_ME,
             password: hashedPassword,
             // status:false,

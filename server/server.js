@@ -15,15 +15,17 @@ app.use(express.urlencoded({extended:true }))
 connectDB();
 
 const router = require('./routers/authRoute')
-// const routerManager =  require('./routers/managerRoute')
-// const routerLivreur =  require('./routers/livreurRoute')
-// const routerClient =  require('./routers/clientRoute')
+const routerAppartement =  require('./routers/appartementRoute')
+const routerPaiement =  require('./routers/paiementRoute')
+const routerClient =  require('./routers/clientRoute')
+
 const {errorHandler} = require('./middlewares/errorMiddleware')
 
 app.use('/api/auth',router)
-// app.use('/api/user',routerManager)
-// app.use('/api/user',routerLivreur)
-// app.use('/api/user',routerClient)
+app.use('/api/appartement',routerAppartement)
+app.use('/api/paiement',routerPaiement)
+app.use('/api/client',routerClient)
+
 app.use(errorHandler)
 Regester()
 const port = process.env.PORT || 3000

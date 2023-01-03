@@ -3,6 +3,10 @@ const mongoose = require('mongoose')
 // const Role = require('../models/roleModel')
 // // create Schema
 const authSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+},
     email: {
         type: String,
         required: true,
@@ -20,5 +24,5 @@ const authSchema = mongoose.Schema({
         timestamps:true
     }
 )
-module.exports = mongoose.model('User',authSchema)
+module.exports = mongoose.model('Syndic',authSchema)
 
