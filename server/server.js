@@ -5,7 +5,7 @@ const app = express();
 const cookie = require('cookie-parser')
 const cors = require('cors')
 const mongoose = require('mongoose');
-const {Regester}= require('./Controllers/AuthController')
+const {Register}= require('./Controllers/AuthController')
 
 
 app.use(cors({origin:true, credentials:true}))
@@ -27,7 +27,7 @@ app.use('/api/paiement',routerPaiement)
 app.use('/api/client',routerClient)
 
 app.use(errorHandler)
-Regester()
+Register()
 const port = process.env.PORT || 3000
  app.listen(port,(err)=>{
     if(!err){

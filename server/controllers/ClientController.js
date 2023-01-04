@@ -8,9 +8,8 @@ const ClientSchema = require('../Models/clientModel');
 const GetAllClient = asyncHandler(async (req, res) => {
     try{
        const data = await ClientSchema.find()
-       console.log(data)
-        res
-        .status(200).send(data)
+    //    console.log(data)
+        res.status(200).send(data)
         
     } catch (error) {
         res.status(400)
@@ -50,7 +49,6 @@ const GetOneClient = asyncHandler(async (req, res) => {
         })
         res.status(200).send(data)
         // console.log('datatttttt',data)
-        
         }catch(error){
             res.status(400)
             console.log(error)
@@ -66,7 +64,6 @@ const GetOneClient = asyncHandler(async (req, res) => {
     const id =  req.params.id;
     const { name, cin, tele, id_appartement } = req.body
     
-
         try{
             const data = await ClientSchema.findOne({_id: id})
             data.name = name
@@ -91,7 +88,7 @@ const DeleteClient = asyncHandler( async(req,res)=>{
          await ClientSchema.findOneAndRemove({ _id:id})    
         res.status(200).send({message:"delete formation success"})
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         res.status(400)
         throw new Error(error)
     }

@@ -29,67 +29,55 @@ const Login = asyncHandler(async (req,res, next) => {
             res.status(400)
             return next({message:"Please add all fields"})
         }
-        const findUser = await User.findOne({ email : email }).populate("role")
+        const findUser = await User.findOne({ email : email })
         // console.log(findUser.role)
 
         if(findUser){ 
 
-                const match = await bcryptjs.compare(password, findUser.password)
-                if(match) {
-                    if(findUser.status==false){
-                        res.status(400)
-                        next(new Error('verify email pour validation'))
-                    }else{
-                        
-                        const token = createToken(findUser.id)
-                        return res
-                        // .cookie('myrole', findUser.role)
-                        .cookie('access-token',token)
-                        .status(201).json({
-                            id : findUser.id,
-                            name: findUser.name,
-                            email : findUser.email,
-                            role: findUser.role,
-                            message : 'login successfuly'
-                        })
-                        
-                    }
-                }
-                res.status(400)
-                return next({ message: "password not correct"})
-
+            const match = await bcryptjs.compare(password, findUser.password)
+            if(match) {
+                const token = createToken(findUser.id)
+                return res
+                // .cookie('myrole', findUser.role)
+                .cookie('access-token',token)
+                .status(201).json({
+                id : findUser.id,
+                name: findUser.name,
+                email : findUser.email,
+                message : 'login successfuly'
+                })
+            }
+            res.status(400)
+            return next({ message: "password not correct"})
         } else{
             // console.log('user not regestered')
             res.status(400) 
             return next({message:"email not right"})
-            }
+        }
 
     } catch (err) {
         console.log(err)
     }
 
-    })
+})
 
 //method post 
 // url : /api/auth/regester
 // acess : public
-const Regester = asyncHandler(async (req,res) => {
+const Register = asyncHandler(async (req,res) => {
     const hashedPassword = await bcryptjs.hash(process.env.PASSWORD_ME,10)
     const admin = await User.findOne({email:process.env.EMAIL_ME})
-    // console.log('admin',admin)
-    // create user
     if(!admin){
         let user = await User.create({
             name:process.env.NAME_ME,
             email:process.env.EMAIL_ME,
             password: hashedPassword,
-            // status:false,
-            token: crypto.randomBytes(64).toString('hex'),
         })
-    // console.log('user',user);
+        // res.status(201).send(user)
     }
     // else{
-    //     console.log("user deja creat")
+    //     res.status(400)
+    //     return next({message:"user deja creat"})
     // }
 })
 
@@ -97,15 +85,12 @@ const Regester = asyncHandler(async (req,res) => {
 // url : /api/auth/Forgetpassword
 // acess : public
 const Forgetpassword = async (req,res,next) => {
-    // const {email }= req.body
     try {
-
     const {email}= req.body
     if(!email){
         res.status(400)
         return next({message:"Please add email"})
     }
-    
     const user = await User.findOne({email})
     if(!user){
          res.status(400)
@@ -162,5 +147,5 @@ const Resetpassword =  asyncHandler ( async (req,res) => {
 
 })
 
-module.exports = {Login,Regester,Forgetpassword,Resetpassword};
+module.exports = {Login,Register,Forgetpassword,Resetpassword};
 

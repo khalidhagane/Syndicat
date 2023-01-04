@@ -24,5 +24,5 @@ const authSchema = mongoose.Schema({
         timestamps:true
     }
 )
-module.exports = mongoose.model('Syndic',authSchema)
+module.exports = mongoose.model('User',authSchema)
 

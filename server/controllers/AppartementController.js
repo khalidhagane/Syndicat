@@ -41,18 +41,20 @@ console.log('GetOneAppartement',id);
 // add formation
  const AddAppartement = asyncHandler(async (req, res) => {
     const { imeuble, etage, appartement } = req.body
+    if(!imeuble || !etage || !appartement){
+        res.status(400)
+        return next({message:"Please add all fields"})
+    }
     try{
            const data = await AppartementSchema.create({
             imeuble,
             etage,
             appartement,
         })
-        res.status(200).json(
-            // console.log('datatttttt',data)
-        )
+        res.status(200).send(data)
         }catch(error){
             res.status(400)
-            console.log(error)
+            // console.log(error)
             throw new Error(error)
         }
  })
@@ -64,13 +66,17 @@ console.log('GetOneAppartement',id);
  const UpdateAppartement = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
     const { imeuble, etage, appartement } = req.body
+        if(!imeuble || !etage || !appartement){
+            res.status(400)
+            return next({message:"Please add all fields"})
+        }
         try{
             const data = await AppartementSchema.findOne({_id: id})
             data.imeuble = imeuble
             data.etage = etage
             data.appartement = appartement
             await data.save()
-           res.status(200).send(data)
+            res.status(200).send(data)
        } catch (error) {
            res.status(400)
            throw new Error(error)

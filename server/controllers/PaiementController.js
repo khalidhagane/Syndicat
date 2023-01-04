@@ -8,8 +8,7 @@ const PaiementSchema = require('../Models/paiementModel');
 const GetAllPaiement = asyncHandler(async (req, res) => {
     try{
        const data = await PaiementSchema.find()
-        res
-        .status(200).send(data)
+        res.status(200).send(data)
         // .console.log('dataaaa',data)
     } catch (error) {
         res.status(400)
@@ -23,7 +22,7 @@ const GetAllPaiement = asyncHandler(async (req, res) => {
 // get one paiement
 const GetOnePaiement = asyncHandler(async (req, res) => {
     const id = req.params.id
-    console.log('GetOnePaiement',id);
+    // console.log('GetOnePaiement',id);
         try{
             
              const data = await PaiementSchema.findOne({_id:id})
@@ -47,12 +46,11 @@ const GetOnePaiement = asyncHandler(async (req, res) => {
             id_appartement,
             id_client
         })
-        res.status(200).json(
-            console.log('datatttttt paiement',data)
-        )
+        
+        res.status(200).send(data)
         }catch(error){
             res.status(400)
-            console.log(error)
+            // console.log(error)
             throw new Error(error)
         }
  })
@@ -89,7 +87,7 @@ const DeletePaiement = asyncHandler( async(req,res)=>{
          await PaiementSchema.findOneAndRemove({ _id:id})    
         res.status(200).send({message:"delete formation success"})
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         res.status(400)
         throw new Error(error)
     }
