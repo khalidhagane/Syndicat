@@ -7,7 +7,7 @@ project E-commerce with technology :
 
 **Server:** Node, Express
 
-**database:** PostgreSql
+**database:** Mongodb
 
 
 ## API Reference
