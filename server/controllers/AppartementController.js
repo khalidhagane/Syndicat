@@ -39,7 +39,7 @@ console.log('GetOneAppartement',id);
 // url : /api/appartement/addappartement
 // access : formation
 // add formation
- const AddAppartement = asyncHandler(async (req, res) => {
+ const AddAppartement = asyncHandler(async (req, res, next) => {
     const { imeuble, etage, appartement } = req.body
     if(!imeuble || !etage || !appartement){
         res.status(400)
@@ -89,6 +89,8 @@ console.log('GetOneAppartement',id);
 // // delete appartement
 const DeleteAppartement = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
+
+    // console.log("id12",id);
     try {
          await AppartementSchema.findOneAndRemove({ _id:id})    
         res.status(200).send({message:"delete formation success"})

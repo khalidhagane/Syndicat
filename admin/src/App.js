@@ -30,8 +30,8 @@ function App() {
                                 path="/appartments/create"
                                 element={<CreateAppartment />}
                             />
-                            <Route
-                                path="/appartments/edit"
+                           <Route
+                                path="/appartments/edit/:id"
                                 element={<UpdateAppartment />}
                             />
                             <Route path="/payments" element={<Payment />} />

@@ -1,16 +1,55 @@
 import { Link } from "react-router-dom"
+import { useState,useEffect } from 'react'
+import { api } from '../../helpers/api'
 
 function Payment() {
+
+    const [paiements, setPaiement] = useState([])
+
+                const getPaiements = async()=>{
+
+                    await api.get('/paiement/getallpaiement').then((Response)=>{
+                        
+                    setPaiement(Response.data);
+                    console.log('data',Response.data)
+                    // console.log('Response.data',Response.data);
+                    console.log('Appartement',paiements)
+                  }).catch((error)=>{
+                    console.log(error);
+                  })
+
+                //   console.log('ttt',ttt)
+                }
+
+                const [appartements, setAppartement] = useState([])
+                const getAppartements = async()=>{
+                    await api.get('/appartement/getallappartement').then((Response)=>{
+                    setAppartement(Response.data);
+                    console.log('data',Response.data)
+                    // console.log('Response.data',Response.data);
+                    console.log('Appartement',appartements)
+                  }).catch((error)=>{
+                    console.log(error);
+                  })
+                //   console.log('ttt',ttt)
+                }
+                useEffect(() => {
+                    getAppartements()
+                    getPaiements()
+                  },[]);
+
+
+
     return (
         <>
             <div className="mt-4 mx-4">
                 <div className="flex items-center justify-between p-2 my-2 bg-gray-800 rounded">
-                    <h1 className="text-2xl font-medium text-gray-300">
-                        Payments
+                    <h1 className="text-2xl  text-gray-300">
+                        Paiements
                     </h1>
                     <Link
                         to="/payments/create"
-                        className="text-white bg-blue-700 font-medium rounded text-sm p-2.5 text-center"
+                        className="text-white bg-gray-600 font-medium rounded text-sm p-2.5 text-center"
                     >
                         Create New Payment
                     </Link>
@@ -20,48 +59,57 @@ function Payment() {
                         <table className="w-full">
                             <thead>
                                 <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-700 text-gray-400 bg-gray-800">
-                                    <th className="px-4 py-3">Owner</th>
-                                    <th className="px-4 py-3">Amount Paid</th>
+                                    <th className="px-4 py-3">Prix</th>
+                                    <th className="px-4 py-3">Date</th>
                                     <th className="px-4 py-3">
-                                        Last Paid Months
+                                        Appartement
                                     </th>
-                                    <th className="px-4 py-3">Unpaid Months</th>
+                                    <th className="px-4 py-3">Client</th>
                                     <th className="px-4 py-3">Action</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-700 bg-gray-800">
+                            {paiements.map((item)=>{
+                        return(
                                 <tr className="bg-gray-800 hover:bg-gray-100 hover:bg-gray-900 text-gray-400">
                                     <td className="px-4 py-3">
                                         <div className="flex items-center text-sm">
                                             <div>
                                                 <p className="font-semibold">
-                                                    Hans Burger
+                                                {item.prix}
                                                 </p>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-4 py-3 text-sm">
-                                        $855.85
+                                    {item.date}
                                     </td>
                                     <td className="px-4 py-3 text-sm">
-                                        15-01-2021
+                                    {item.id_appartement}
                                     </td>
                                     <td className="px-4 py-3 text-sm">
-                                        15-01-2021
+                                    {item.id_client}
                                     </td>
                                     <td className="px-4 py-3 text-sm">
                                         <Link
                                             to="/payments/edit"
-                                            className="text-white bg-blue-700 font-medium rounded text-sm px-3 py-2 text-center"
+                                            className="text-white bg-gray-700 font-medium rounded text-sm px-3 py-2 text-center"
                                         >
                                             Update
                                         </Link>
+                                        <span className="mx-2 text-white bg-red-700 font-medium rounded text-sm px-3 py-2 text-center">
+                                            Delete
+                                        </span>
                                     </td>
+                                    
                                 </tr>
+                                )
+                            })}
                             </tbody>
                         </table>
                     </div>
-                    <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t border-gray-700 sm:grid-cols-9 text-gray-400 bg-gray-800">
+                    {/* start pagination */}
+                    {/* <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t border-gray-700 sm:grid-cols-9 text-gray-400 bg-gray-800">
                         <span className="flex items-center col-span-3">
                             Showing 21-30 of 100
                         </span>
@@ -141,7 +189,8 @@ function Payment() {
                                 </ul>
                             </nav>
                         </span>
-                    </div>
+                    </div> */}
+                    {/* end pagination */}
                 </div>
             </div>
         </>
