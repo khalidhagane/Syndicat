@@ -8,9 +8,12 @@ import {
     UpdateAppartment,
     Payment,
     CreatePayment,
-    UpdatePayment,
+    UpdatePayments,
     Dashboard,
     Home,
+    Client,
+    CreateClient,
+    UpdateClient,
 } from "./pages/index"
 
 function App() {
@@ -34,14 +37,30 @@ function App() {
                                 path="/appartments/edit/:id"
                                 element={<UpdateAppartment />}
                             />
+                            <Route
+                                path="/clients"
+                                element={<Client />}
+                            />
+                             <Route
+                                path="/clients/create"
+                                element={<CreateClient />}
+                            />
+                             <Route
+                                path="/clients/edit/:id"
+                                element={<UpdateClient />}
+                            />
                             <Route path="/payments" element={<Payment />} />
                             <Route
                                 path="/payments/create"
                                 element={<CreatePayment />}
                             />
-                            <Route
-                                path="/payments/edit"
+                            {/* <Route
+                                path="/payments/edit/:id"
                                 element={<UpdatePayment />}
+                            /> */}
+                            <Route
+                                path="/payments/edit/:id"
+                                element={<UpdatePayments />}
                             />
                         </Route>
                     </Route>

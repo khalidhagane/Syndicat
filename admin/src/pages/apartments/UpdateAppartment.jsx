@@ -1,30 +1,20 @@
 import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import { api } from '../../helpers/api'
-// import { Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-
  
 function UpdateAppartment() {
     const navigate = useNavigate();
     const params = useParams()
-    console.log("params",params);
-
     const [data, setData] = useState({})
-    // const [floors, setFloors] = useState([])
-    // const [succ, setSucc] = useState()
 
     // get the specific appartment data
     const getOneAppartement = (id) => {
-        // const id = params.id
-        // console.log("kkkkkk id",params.id)
         api.get(`/appartement/getoneappartement/${id}`, {
             // headers: { Authorization: `Bearer ${token}` },
         })
             .then((response) => {
                 setData(response.data)
-                // console.log('bbbbbb',response.data)
-                // console.log('datrrr',data);
             })
             .catch((error) => {
                 console.log(error)
@@ -32,29 +22,17 @@ function UpdateAppartment() {
     }
 
     useEffect(() => {
-        // get the specific appartment data
         getOneAppartement(params.id)
-        // get all floors
-        
     }, [params.id])
-
 
  // update appartment
  const updateAppartement = (e) => {
-    
-    console.log("dataaaaaa",data)
-    console.log("params._id",params.id)
-
     e.preventDefault()
-
     api.put(`/appartement/updateappartement/${params.id}`, data, {
-        
         // headers: { Authorization: `Bearer ${token}` },
     })
         .then((response) => {
-            
             navigate('/appartments');
-            
         })
         .catch((error) => {
             console.log(error)

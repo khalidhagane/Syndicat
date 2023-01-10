@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react'
 import { api } from '../../helpers/api'
-// import { Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
 function CreateAppartment() {
     const navigate = useNavigate();
-
     const [data, setData] = useState({})
     const inputHandler = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
-
     // const createAppartment = (e) => {
     //     e.preventDefault()
 
@@ -34,7 +31,6 @@ function CreateAppartment() {
         .then((response)=>{
         //   console.log("kkkkkkkkkkdata",response.data);
         navigate('/appartments');
-
         }).catch((error)=>{
           console.log('errror',error);
         })

@@ -3,9 +3,13 @@ import CreateAppartment from "./apartments/CreateAppartment"
 import UpdateAppartment from "./apartments/UpdateAppartment"
 import Payment from "./payments/Payment"
 import CreatePayment from "./payments/CreatePayment"
-import UpdatePayment from "./payments/UpdatePayment"
+import UpdatePayments from "./payments/UpdatePayments"
 import Dashboard from "./Dashboard"
 import Home from "./Home"
+import Client from "./clients/Client"
+import CreateClient from "./clients/CreateClient"
+import UpdateClient from "./clients/UpdateClient"
+
 
 export {
     Appartment,
@@ -13,7 +17,10 @@ export {
     UpdateAppartment,
     Payment,
     CreatePayment,
-    UpdatePayment,
+    UpdatePayments,
     Dashboard,
     Home,
+    Client,
+    CreateClient,
+    UpdateClient,
 }

@@ -1,64 +1,62 @@
 import { Link } from "react-router-dom"
 import { useState,useEffect } from 'react'
 import { api } from '../../helpers/api'
+// import { Navigate } from 'react-router-dom'
 
-function Payment() {
+function Client() {
+  
 
-    const [paiements, setPaiement] = useState([])
-
-                const getPaiements = async()=>{
-                    await api.get('/paiement/getallpaiement').then((Response)=>{
-                    setPaiement(Response.data);
-                    console.log('data',Response.data)
-                    // console.log('Response.data',Response.data);
-                    console.log('Appartement',paiements)
+              const [client, setClient] = useState([])
+                const getClients = async()=>{
+                    await api.get('/client/getallclient').then((Response)=>{
+                    setClient(Response.data);
+                    // console.log('data',Response.data)
+                    // console.log('Appartement',appartements)
                   }).catch((error)=>{
                     console.log(error);
                   })
                 }
-
-                // const [appartements, setAppartement] = useState([])
-                // const getAppartements = async()=>{
-                //     await api.get('/appartement/getallappartement').then((Response)=>{
-                //     setAppartement(Response.data);
-                //     console.log('data',Response.data)
-                //     // console.log('Response.data',Response.data);
-                //     console.log('Appartement',appartements)
-                //   }).catch((error)=>{
-                //     console.log(error);
-                //   })
-                // //   console.log('ttt',ttt)
-                // }
+                
                 useEffect(() => {
-                    // getAppartements()
-                    getPaiements()
+                    getClients()
                   },[]);
 
-                  const deletePaiement = async (id) =>{
-
-                    console.log("lllll",id);
-                    await  api.delete(`/paiement/deletepaiement/${id}`)
+                  const deleteClient = async (id) =>{
+                    await  api.delete(`/client/deleteclient/${id}`)
                     .then((response)=>{
-                    getPaiements()
+                    getClients()
                     }).catch((error)=>{
                       console.log(error);
                     })
                   }
 
-
+                //   const removeAppartment = (id) => {
+                //     api.delete(`/appartement/deleteappartement/${id}`, {
+                //         // headers: { Authorization: `Bearer ${token}` },
+                //     })
+                //         .then((response) => {
+                //             let result = data.filter((appa) => appa._id !== id)
+                //             setData(result)
+                //         })
+                //         .catch((error) => {
+                //             console.log(error)
+                //         })
+                // }
 
     return (
         <>
+       
             <div className="mt-4 mx-4">
                 <div className="flex items-center justify-between p-2 my-2 bg-gray-800 rounded">
+               
                     <h1 className="text-2xl  text-gray-300">
-                        Paiements
+                        Clients
                     </h1>
                     <Link
-                        to="/payments/create"
+                        to="/clients/create"
                         className="text-white bg-gray-600 font-medium rounded text-sm p-2.5 text-center"
                     >
-                        Create New Payment
+                        Create New Client
                     </Link>
                 </div>
                 <div className="w-full overflow-hidden rounded shadow-xs">
@@ -66,58 +64,68 @@ function Payment() {
                         <table className="w-full">
                             <thead>
                                 <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-700 text-gray-400 bg-gray-800">
-                                    <th className="px-4 py-3">Prix</th>
-                                    <th className="px-4 py-3">Date</th>
                                     <th className="px-4 py-3">
+                                        Name
+                                    </th>
+                                    <th className="px-4 py-3 text-center">
+                                        CIN
+                                    </th>
+                                    <th className="px-4 py-3 text-center">
+                                        tele
+                                    </th>
+                                    <th className="px-4 py-3 text-center">
                                         Appartement
                                     </th>
-                                    <th className="px-4 py-3">Client</th>
-                                    <th className="px-4 py-3">Action</th>
+                                    <th className="px-4 ml-2 text-center py-3">
+                                        Action
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-700 bg-gray-800">
-                            {paiements.map((item)=>{
+                            {client.map((item)=>{
                         return(
-                                <tr className="bg-gray-800 hover:bg-gray-100 hover:bg-gray-900 text-gray-400">
-                                    <td className="px-4 py-3">
-                                        <div className="flex items-center text-sm">
-                                            <div>
-                                                <p className="font-semibold">
-                                                {item.prix}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-4 py-3 text-sm">
-                                    {item.date}
-                                    </td>
-                                    <td className="px-4 py-3 text-sm">
-                                    {item.id_appartement}
-                                    </td>
-                                    <td className="px-4 py-3 text-sm">
-                                    {item.id_client}
-                                    </td>
-                                    <td className="px-4 py-3 text-sm text-center">
-                                    <Link
-                                        className=" text-white bg-gray-700 font-medium rounded text-sm px-3 py-2"
-                                        to={`/payments/edit/${item._id}`}
-                                    >
-                                        Update
-                                    </Link>
+                        
+                         <tr className="bg-gray-800 hover:bg-gray-100 hover:bg-gray-900 text-gray-400">
+                         <td className="px-4 py-3">
+                             <div className="flex items-center text-sm">
+                                 <div>
+                                     <p className="font-semibold">
+                                     {item.name}
+                                     </p>
+                                 </div>
+                             </div>
+                         </td>
+                         <td className="px-4 py-3 text-sm text-center">
+                         {item.cin}
+                         </td>
+                         <td className="px-4 py-3 text-sm text-center">
+                         {item.tele}
+                         </td>
+                         <td className="px-4 py-3 text-sm text-center">
+                         {item.id_appartement}
+                         </td>
+                         <td className="px-4 py-3 text-sm text-center">
+                             <Link
+                                 className=" text-white bg-gray-700 font-medium rounded text-sm px-3 py-2"
+                                 to={`/clients/edit/${item._id}`}
+                             >
+                                 Update
+                             </Link>
 
-                                    <Link 
-                                    onClick={() => deletePaiement(item._id)}
-                                    className="mx-2 text-white bg-red-700 font-medium rounded text-sm px-3 py-2 text-center">
-                                        Delete
-                                    </Link>
-                                    </td>
-                                    
-                                </tr>
-                                )
-                            })}
+                             <Link 
+                            onClick={() => deleteClient(item._id)}
+                             className="mx-2 text-white bg-red-700 font-medium rounded text-sm px-3 py-2 text-center">
+                                 Delete
+                             </Link>
+                         </td>
+                     </tr>
+                        )
+                    })}
+                               
                             </tbody>
                         </table>
                     </div>
+
                     {/* start pagination */}
                     {/* <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t border-gray-700 sm:grid-cols-9 text-gray-400 bg-gray-800">
                         <span className="flex items-center col-span-3">
@@ -207,4 +215,4 @@ function Payment() {
     )
 }
 
-export default Payment
+export default Client

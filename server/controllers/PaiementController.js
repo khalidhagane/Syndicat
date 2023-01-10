@@ -38,6 +38,7 @@ const GetOnePaiement = asyncHandler(async (req, res) => {
 // access : paiement
 // add paiement
  const AddPaiement = asyncHandler(async (req, res) => {
+    console.log('req',req.body);
     const { prix, date, id_appartement, id_client } = req.body
     try{
            const data = await PaiementSchema.create({
