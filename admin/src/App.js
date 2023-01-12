@@ -8,18 +8,20 @@ import {
     UpdateAppartment,
     Payment,
     CreatePayment,
-    UpdatePayments,
+    UpdatePayment,
     Dashboard,
     Home,
     Client,
     CreateClient,
     UpdateClient,
+    PaiementCard,
+    Logout,
 } from "./pages/index"
 
 function App() {
     return (
         <Router>
-            <AuthProvider>
+            {/* <AuthProvider> */}
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route element={<IsLoggedIn />}>
@@ -33,6 +35,10 @@ function App() {
                                 path="/appartments/create"
                                 element={<CreateAppartment />}
                             />
+                            <Route 
+                                path="/logout" 
+                                element={<Logout />}
+                             />
                            <Route
                                 path="/appartments/edit/:id"
                                 element={<UpdateAppartment />}
@@ -54,18 +60,18 @@ function App() {
                                 path="/payments/create"
                                 element={<CreatePayment />}
                             />
-                            {/* <Route
-                                path="/payments/edit/:id"
-                                element={<UpdatePayment />}
-                            /> */}
+                            <Route
+                                path="/payments/card/:id"
+                                element={<PaiementCard />}
+                            />
                             <Route
                                 path="/payments/edit/:id"
-                                element={<UpdatePayments />}
+                                element={<UpdatePayment />}
                             />
                         </Route>
                     </Route>
                 </Routes>
-            </AuthProvider>
+            {/* </AuthProvider> */}
         </Router>
     )
 }

@@ -13,12 +13,12 @@ const paiementSchema = mongoose.Schema({
     },
     id_appartement: {
         type:mongoose.Schema.Types.ObjectId,
-        ref:'appartements',
+        ref:'Appartement',
         required: true
     },
     id_client: {
         type:mongoose.Schema.Types.ObjectId,
-        ref:'clients',
+        ref:'Client',
         required: true,
     },
 },

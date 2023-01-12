@@ -92,12 +92,18 @@ function Payment() {
                                     {item.date}
                                     </td>
                                     <td className="px-4 py-3 text-sm">
-                                    {item.id_appartement}
+                                    {item.id_appartement.appartement}
                                     </td>
                                     <td className="px-4 py-3 text-sm">
-                                    {item.id_client}
+                                    {item.id_client.name}
                                     </td>
                                     <td className="px-4 py-3 text-sm text-center">
+                                    <Link
+                                        className=" text-white bg-gray-700 font-medium rounded text-sm px-3 py-2"
+                                        to={`/payments/card/${item._id}`}
+                                    >
+                                        Voir
+                                    </Link>
                                     <Link
                                         className=" text-white bg-gray-700 font-medium rounded text-sm px-3 py-2"
                                         to={`/payments/edit/${item._id}`}

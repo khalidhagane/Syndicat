@@ -7,7 +7,7 @@ const ClientSchema = require('../Models/clientModel');
 // get all formation
 const GetAllClient = asyncHandler(async (req, res) => {
     try{
-       const data = await ClientSchema.find()
+       const data = await ClientSchema.find().populate("id_appartement")
     //    console.log(data)
         res.status(200).send(data)
         

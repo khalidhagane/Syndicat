@@ -2,13 +2,9 @@ const jwt = require('jsonwebtoken')
 const bcryptjs= require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/authModel')
-const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { json } = require('express');
-const sendemail = require('../utils/sendemail')
-const sendEmailPassword = require('../utils/sendEmailPassword')
-// const Role = require('../models/roleModel');
-const { send } = require('process');
+// const { send } = require('process');
 require("dotenv").config()
 
 
@@ -44,6 +40,7 @@ const Login = asyncHandler(async (req,res, next) => {
                 id : findUser.id,
                 name: findUser.name,
                 email : findUser.email,
+                token: crypto.randomBytes(64).toString('hex'),
                 message : 'login successfuly'
                 })
             }
@@ -54,11 +51,9 @@ const Login = asyncHandler(async (req,res, next) => {
             res.status(400) 
             return next({message:"email not right"})
         }
-
     } catch (err) {
         console.log(err)
     }
-
 })
 
 //method post 
@@ -73,79 +68,8 @@ const Register = asyncHandler(async (req,res) => {
             email:process.env.EMAIL_ME,
             password: hashedPassword,
         })
-        // res.status(201).send(user)
     }
-    // else{
-    //     res.status(400)
-    //     return next({message:"user deja creat"})
-    // }
 })
 
-//method post 
-// url : /api/auth/Forgetpassword
-// acess : public
-const Forgetpassword = async (req,res,next) => {
-    try {
-    const {email}= req.body
-    if(!email){
-        res.status(400)
-        return next({message:"Please add email"})
-    }
-    const user = await User.findOne({email})
-    if(!user){
-         res.status(400)
-        // .json({err: 'email non exit'})
-        return next({message:"email non exit"})
-    }
-    else{
-        const token = createToken(user.id)
-        console.log("token forget password=> "+token)
-        sendEmailPassword(user.email, token)
-        
-         res.status(400) 
-            return next({message:"check email pour valid password"})
-        
-    }
-    
-}
-     catch(err) {
-        console.log(err)
-    }
-}
-
-//method post 
-// url : /api/auth/resetpassword
-// acess : public
-const Resetpassword =  asyncHandler ( async (req,res) => {
-    
-    const {password,confpassword} = req.body
-    
-    if(!password || !confpassword){
-        res.status(400)
-        throw new Error('Please add password ')
-    }else if(password != confpassword){
-        res.status(400)
-        throw new Error('password not match ')
-    }
-    
-    const token =  req.params.token
-        console.log(token)
-    const userid = await jwt.verify(token,process.env.JWT_SECRET)
-
-    const salt = await bcryptjs.genSalt(10)
-    const hashPassword = await bcryptjs.hash(password, salt)
-    
-    await User.findOneAndUpdate(
-        {_id : userid.id},
-        {password : hashPassword}
-        
-    )
-    
-    res.status(200)
-    .json({mess : 'password has update successfuly'})
-    
-
-})
-
-module.exports = {Login,Register,Forgetpassword,Resetpassword};
+module.exports = {Login,Register};
 

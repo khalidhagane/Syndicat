@@ -17,5 +17,30 @@ project E-commerce with technology :
 | Method | Api     | Description                |
 | :-------- | :------- | :------------------------- |
 | `POST` | `/api/auth/login` | **Login**|
-| `POST` | `/api/auth/forgetpassword` | **forgetpassword**|
-| `POST` | `/api/auth/resetpassword/:token` | **resetpassword**|
+
+### Appartement
+
+| Method | Api     | Description                |
+| :-------- | :------- | :------------------------- |
+| `POST` | `/api/appartement/addapartement` | **addapartement**|
+| `POST` | `/api/appartement/getoneapartement/:id` | **getoneapartement**|
+| `POST` | `/api/appartement/updateapartement/:id` | **updateapartement**|
+| `POST` | `/api/appartement/deleteapartement/:id` | **deleteapartement**|
+
+### Client
+
+| Method | Api     | Description                |
+| :-------- | :------- | :------------------------- |
+| `POST` | `/api/client/addclient` | **addclient**|
+| `POST` | `/api/client/getoneclient/:id` | **getoneclient**|
+| `POST` | `/api/client/updateclient/:id` | **updateclient**|
+| `POST` | `/api/client/deleteclient/:id` | **deleteclient**|
+
+### Pyament
+
+| Method | Api     | Description                |
+| :-------- | :------- | :------------------------- |
+| `POST` | `/api/paiement/addpaiement` | **addpaiement**|
+| `POST` | `/api/paiement/getonepaiement/:id` | **getonepaiement**|
+| `POST` | `/api/paiement/updatepaiement/:id` | **updatepaiement**|
+| `POST` | `/api/paiement/deletepaiement/:id` | **deletepaiement**|

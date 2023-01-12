@@ -16,8 +16,8 @@ const clientSchema = mongoose.Schema({
         required: true,
         },
     id_appartement: {
-        type:[mongoose.Schema.Types.ObjectId],
-        ref:'appartements',
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Appartement',
         required: true,
         },
 },

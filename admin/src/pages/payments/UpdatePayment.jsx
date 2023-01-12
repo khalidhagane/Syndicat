@@ -1,34 +1,25 @@
-import { Link } from "react-router-dom"
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import { api } from '../../helpers/api'
 import { useNavigate } from 'react-router-dom';
-
-
+ 
 function UpdatePayment() {
-
     const navigate = useNavigate();
+    const params = useParams()
     const [data, setData] = useState({})
-    
-    
-    // const createAppartment = (e) => {
-    //     e.preventDefault()
 
-    //     api.post("/appartements", data, {
-    //         // headers: { Authorization: `Bearer ${token}` },
-    //     })
-    //         .then((response) => {
-    //             setSucc(response.data.message)
-    //             // console.log(response)
-    //         })
-    //         .catch((err) => {
-    //             setErr(err.response?.data)
-    //             console.log(err)
-    //         })
-    // }
-
+    const [appartements, setAppartement] = useState([])
     const [clients, setClient] = useState([])
-    const getClients = async()=>{
+
+    const getAppartements = async()=>{
+        await api.get('/appartement/getallappartement').then((Response)=>{
+        setAppartement(Response.data);
+      }).catch((error)=>{
+        console.log(error);
+      })
+    }
+    
+    const getClient = async()=>{
         await api.get('/client/getallclient').then((Response)=>{
         setClient(Response.data);
       }).catch((error)=>{
@@ -36,64 +27,49 @@ function UpdatePayment() {
       })
     }
 
-    const [appartements, setAppartement] = useState([])
-                const getAppartements = async()=>{
-                    await api.get('/appartement/getallappartement').then((Response)=>{
-                    setAppartement(Response.data);
-                  }).catch((error)=>{
-                    console.log(error);
-                  })
-                }
-                
-               
+    // get the specific appartment data
+    const getOnePaiement = (id) => {
+        api.get(`/paiement/getonepaiement/${id}`, {
+            // headers: { Authorization: `Bearer ${token}` },
+        })
+            .then((response) => {
+                setData(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
-                  const params = useParams()
-                  const getOnePaiement = (id) => {
-                    api.get(`/paiement/getonepaiement/${id}`, {
-                        // headers: { Authorization: `Bearer ${token}` },
-                    })
-                        .then((response) => {
-                            setData(response.data)
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
-                }
-            
-                useEffect(() => {
-                    getAppartements()
-                    getClients()
-                    getOnePaiement(params.id)
-                }, [params.id])
-            
+    useEffect(() => {
+        getOnePaiement(params.id)
+        getClient()
+        getAppartements()
+        console.log('clients',clients);
+    }, [params.id])
 
+ // update appartment
+     const updatePaiement = (e) => {
+    e.preventDefault()
+    api.put(`/paiement/updatepaiement/${params.id}`, data, {
+        // headers: { Authorization: `Bearer ${token}` },
+    })
+        .then((response) => {
+            navigate('/payments');
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+}
 
+const inputHandler = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value })
+}
 
-                  const updatePaiement = (e) => {
-                    console.log('updatttttid',params.id);
-
-                    console.log('updattttt',data);
-                    
-                    e.preventDefault()
-                    api.put(`/paiement/updatepaiement/${params.id}`, data, {
-                        // headers: { Authorization: `Bearer ${token}` },
-                    })
-                        .then((response) => {
-                            navigate('/payments');
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
-                }
-
-                const inputHandler = (e) => {
-                    setData({ ...data, [e.target.name]: e.target.value })
-                }
     return (
         <>
             <div className="p-6 rounded bg-gray-700 w-2/4 mx-auto mt-5 bg-gray-800">
                 <h1 className="text-2xl font-medium text-gray-300 text-center py-2">
-                    Update Payment
+                    Update Client
                 </h1>
                 <form onSubmit={updatePaiement} className="w-full">
                     <div className="form-group mb-6">
@@ -101,21 +77,34 @@ function UpdatePayment() {
                         <input
                             type="text"
                             className="form-control block w-full px-3 py-1.5 text-base font-normal bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-white focus:outline-none bg-gray-600"
-                            name="prix"
-                            value={data.prix}
                             placeholder="prix"
+                            name='prix'
+                            value={data.prix}
+                            onChange={inputHandler}
                         />
                     </div>
                     <div className="form-group mb-6">
                         <label htmlFor="">Date</label>
                         <input
-                            type="date"
+                            type="text"
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-whitebg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-white focus:outline-none bg-gray-600"
-                            name="date"
-                            value={data.date}
                             placeholder="date"
+                            name='date'
+                            value={data.date}
+                            onChange={inputHandler}
                         />
                     </div>
+                    {/* <div className="form-group mb-6">
+                        <label htmlFor="">Appartement</label>
+                        <input
+                            type="text"
+                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-whitebg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-white focus:outline-none bg-gray-600"
+                            placeholder="tele"
+                            name='tele'
+                            value={data.tele}
+                            onChange={inputHandler}
+                        />
+                    </div> */}
                     <div className="form-group mb-6">
                         <label
                             for="countries"
@@ -147,7 +136,7 @@ function UpdatePayment() {
                             for="countries"
                             class="block mb-2 text-sm font-medium text-white"
                         >
-                            Appartment 
+                            Client 
                         </label>
                         <select
                             id="countries"
@@ -168,7 +157,6 @@ function UpdatePayment() {
                         })}
                         </select>
                     </div>
-
                     <div className="text-center">
                     <button
                         type="submit"

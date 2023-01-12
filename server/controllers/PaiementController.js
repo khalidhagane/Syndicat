@@ -7,7 +7,7 @@ const PaiementSchema = require('../Models/paiementModel');
 // get all paiement
 const GetAllPaiement = asyncHandler(async (req, res) => {
     try{
-       const data = await PaiementSchema.find()
+       const data = await PaiementSchema.find({}).populate("id_appartement").populate("id_client")
         res.status(200).send(data)
         // .console.log('dataaaa',data)
     } catch (error) {

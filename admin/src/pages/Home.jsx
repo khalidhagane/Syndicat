@@ -24,6 +24,11 @@ function Home() {
         api.post('/auth/login', user, { withCredentials: true })
             .then((response) => {
                 localStorage.setItem('token', response.data.token)
+        //         const email = res.data.email
+        //   const name = res.data.name
+        //   localStorage.setItem("role", roles)
+          localStorage.setItem("email", response.data.email)
+          localStorage.setItem("name", response.data.name)
                 setNoErr(true)
                 console.log(response)
             })
@@ -56,10 +61,7 @@ function Home() {
                         <div>
                             <button type='submit' className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded text-sm font-bold text-gray-50 transition duration-200">Sign In</button>
                         </div>
-                        <p className="forgot-password  text-white">
-                            {/* Forgot <Link  to={'/forgot'}>password?</Link> */}
-                            forget password?
-                        </p>
+                        
                     </form>
                 </div>
                 { noErr && <Navigate to='/dashboard' /> }

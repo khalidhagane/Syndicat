@@ -1,4 +1,6 @@
 import "https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js"
+import { Link } from "react-router-dom"
+
 
 function Navbar() {
     return (
@@ -40,8 +42,8 @@ function Navbar() {
                         <div className="block w-px h-6 mx-3 bg-gray-700"></div>
                     </li>
                     <li>
-                        <a
-                            href="#"
+                        <Link
+                            to={'/logout'}
                             className="flex items-center mr-4 hover:text-blue-100"
                         >
                             <span className="inline-flex mr-1">
@@ -61,7 +63,7 @@ function Navbar() {
                                 </svg>
                             </span>
                             Logout
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
