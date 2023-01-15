@@ -4,67 +4,48 @@ import { useNavigate } from 'react-router-dom';
 
 function CreatePayment() {
 
-
+    const [message,setMessage] = useState(false);
     const navigate = useNavigate();
     const [data, setData] = useState({})
+
     const inputHandler = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
-    // const createAppartment = (e) => {
-    //     e.preventDefault()
-
-    //     api.post("/appartements", data, {
-    //         // headers: { Authorization: `Bearer ${token}` },
-    //     })
-    //         .then((response) => {
-    //             setSucc(response.data.message)
-    //             // console.log(response)
-    //         })
-    //         .catch((err) => {
-    //             setErr(err.response?.data)
-    //             console.log(err)
-    //         })
-    // }
 
     const [clients, setClient] = useState([])
     const getClients = async()=>{
         await api.get('/client/getallclient').then((Response)=>{
         setClient(Response.data);
-        // console.log('data',Response.data)
-        // console.log('Appartement',appartements)
       }).catch((error)=>{
         console.log(error);
       })
     }
 
     const [appartements, setAppartement] = useState([])
-                const getAppartements = async()=>{
-                    await api.get('/appartement/getallappartement').then((Response)=>{
-                    setAppartement(Response.data);
-                    // console.log('data',Response.data)
-                    // console.log('Appartement',appartements)
-                  }).catch((error)=>{
-                    console.log(error);
-                  })
-                }
-                
-                useEffect(() => {
-                    getAppartements()
-                    getClients()
-                  },[]);
+        const getAppartements = async()=>{
+            await api.get('/appartement/getallappartement').then((Response)=>{
+            setAppartement(Response.data);
+            }).catch((error)=>{
+            console.log(error);
+            })
+        }
 
     const addPaiement = async(e)=>{
-        // console.log('paiemantrrr');
-        console.log('paiemantrrr',data);
+        // console.log('paiemantrrr',data);
         e.preventDefault();
         api.post('/paiement/addpaiement',data)
         .then((response)=>{
-        //   console.log("kkkkkkkkkkdata",response.data);
         navigate('/payments');
         }).catch((error)=>{
           console.log('errror',error);
+          setMessage(error.response.data.message);
         })
       }
+
+      useEffect(() => {
+        getAppartements()
+        getClients()
+      },[]);
 
 
     return (
@@ -74,6 +55,7 @@ function CreatePayment() {
                     Create New Payment
                 </h1>
                 <form className="w-full">
+                {message && <div className=' alert alert-danger mt-5 w-100 py-1 text-center border border-0 border-darck text-white'> {message}</div>}
                     <div className="form-group mb-6">
                         <label htmlFor="">Prix</label>
                         <input

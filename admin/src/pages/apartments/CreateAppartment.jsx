@@ -3,26 +3,13 @@ import { api } from '../../helpers/api'
 import { useNavigate } from 'react-router-dom';
 
 function CreateAppartment() {
+    const [message,setMessage] = useState(false);
     const navigate = useNavigate();
     const [data, setData] = useState({})
+
     const inputHandler = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
-    // const createAppartment = (e) => {
-    //     e.preventDefault()
-
-    //     api.post("/appartements", data, {
-    //         // headers: { Authorization: `Bearer ${token}` },
-    //     })
-    //         .then((response) => {
-    //             setSucc(response.data.message)
-    //             // console.log(response)
-    //         })
-    //         .catch((err) => {
-    //             setErr(err.response?.data)
-    //             console.log(err)
-    //         })
-    // }
 
     const addAppartement = async(e)=>{
         // console.log('datatt', data);
@@ -33,6 +20,7 @@ function CreateAppartment() {
         navigate('/appartments');
         }).catch((error)=>{
           console.log('errror',error);
+          setMessage(error.response.data.message);
         })
       }
 
@@ -43,6 +31,7 @@ function CreateAppartment() {
                     Create New Appartment
                 </h1>
                 <form className="w-full" >
+                {message && <div className=' alert alert-danger mt-5 w-100 py-1 text-center border border-0 border-darck text-white'> {message}</div>}
                     <div className="form-group mb-6">
                         <label htmlFor="">Imueble</label>
                         <input
@@ -73,26 +62,6 @@ function CreateAppartment() {
                             onChange={ inputHandler }
                         />
                     </div>
-                    {/* <div className="form-group mb-6">
-                        <label
-                            for="countries"
-                            class="block mb-2 text-sm font-medium text-white"
-                        >
-                            Appartement
-                        </label>
-                        <select
-                            id="countries"
-                            class="outline-none text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                        >
-                            <option selected disabled>
-                                Floor Number
-                            </option>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                        </select>
-                    </div> */}
-
                     <div className="text-center">
                     <button
                     onClick={addAppartement}

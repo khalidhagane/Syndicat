@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
-import { AuthProvider } from "./context/AuthContext"
+
 import IsLoggedIn from "./components/isLoggedin"
 import Wrapper from "./components/common/Wrapper"
 import {
@@ -21,7 +21,7 @@ import {
 function App() {
     return (
         <Router>
-            {/* <AuthProvider> */}
+           
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route element={<IsLoggedIn />}>
@@ -71,7 +71,7 @@ function App() {
                         </Route>
                     </Route>
                 </Routes>
-            {/* </AuthProvider> */}
+            
         </Router>
     )
 }

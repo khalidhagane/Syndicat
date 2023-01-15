@@ -4,16 +4,19 @@ import { api } from '../../helpers/api'
 import { useNavigate } from 'react-router-dom';
  
 function UpdateClient() {
+    const [message,setMessage] = useState(false);
     const navigate = useNavigate();
     const params = useParams()
     const [data, setData] = useState({})
-
     const [appartements, setAppartement] = useState([])
+    
+    const inputHandler = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value })
+    }
+
     const getAppartements = async()=>{
         await api.get('/appartement/getallappartement').then((Response)=>{
         setAppartement(Response.data);
-        // console.log('data',Response.data)
-        // console.log('Appartement',appartements)
       }).catch((error)=>{
         console.log(error);
       })
@@ -26,7 +29,6 @@ function UpdateClient() {
     // get the specific appartment data
     const getOneClient = (id) => {
         api.get(`/client/getoneclient/${id}`, {
-            // headers: { Authorization: `Bearer ${token}` },
         })
             .then((response) => {
                 setData(response.data)
@@ -36,27 +38,24 @@ function UpdateClient() {
             })
     }
 
+    // update appartment
+    const updateClient = (e) => {
+        e.preventDefault()
+        api.put(`/client/updateclient/${params.id}`, data, {
+            // headers: { Authorization: `Bearer ${token}` },
+        })
+            .then((response) => {
+                navigate('/clients');
+            })
+            .catch((error) => {
+                console.log(error)
+                setMessage(error.response.data.message);
+            })
+    }
+    
     useEffect(() => {
         getOneClient(params.id)
     }, [params.id])
-
- // update appartment
- const updateClient = (e) => {
-    e.preventDefault()
-    api.put(`/client/updateclient/${params.id}`, data, {
-        // headers: { Authorization: `Bearer ${token}` },
-    })
-        .then((response) => {
-            navigate('/clients');
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-}
-
-const inputHandler = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value })
-}
 
     return (
         <>
@@ -65,6 +64,7 @@ const inputHandler = (e) => {
                     Update Client
                 </h1>
                 <form onSubmit={updateClient} className="w-full">
+                {message && <div className=' alert alert-danger mt-5 w-100 py-1 text-center border border-0 border-darck text-white'> {message}</div>}
                     <div className="form-group mb-6">
                         <label htmlFor="">Name</label>
                         <input
@@ -123,26 +123,6 @@ const inputHandler = (e) => {
                         })}
                         </select>
                     </div>
-                    {/* <div className="form-group mb-6">
-                        <label
-                            for="countries"
-                            class="block mb-2 text-sm font-medium text-white"
-                        >
-                            Appartement
-                        </label>
-                        <select
-                            id="countries"
-                            class="outline-none text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                        >
-                            <option selected disabled>
-                                Floor Number
-                            </option>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                        </select>
-                    </div> */}
-
                     <div className="text-center">
                     <button
                         type="submit"

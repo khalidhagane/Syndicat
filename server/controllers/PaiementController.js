@@ -40,6 +40,10 @@ const GetOnePaiement = asyncHandler(async (req, res) => {
  const AddPaiement = asyncHandler(async (req, res) => {
     console.log('req',req.body);
     const { prix, date, id_appartement, id_client } = req.body
+    if(!prix || !date || !id_appartement || !id_client){
+        res.status(400)
+        return next({message:"Please add all fields"})
+    }
     try{
            const data = await PaiementSchema.create({
             prix,
@@ -63,6 +67,10 @@ const GetOnePaiement = asyncHandler(async (req, res) => {
  const UpdatePaiement = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
     const { prix, date, id_appartement, id_client } = req.body
+    if(!prix || !date || !id_appartement || !id_client){
+        res.status(400)
+        return next({message:"Please add all fields"})
+    }
         try{
             const data = await PaiementSchema.findOne({_id: id})
             data.prix = prix

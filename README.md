@@ -1,5 +1,5 @@
 # Syndicat
-project E-commerce with technology :
+project Sandycat with technology :
 
 ## Tech Stack
 
@@ -17,6 +17,7 @@ project E-commerce with technology :
 | Method | Api     | Description                |
 | :-------- | :------- | :------------------------- |
 | `POST` | `/api/auth/login` | **Login**|
+| `POST` | `/api/auth/register` | **Register**|
 
 ### Appartement
 

@@ -7,9 +7,14 @@ function UpdatePayment() {
     const navigate = useNavigate();
     const params = useParams()
     const [data, setData] = useState({})
+    const [message,setMessage] = useState(false);
 
     const [appartements, setAppartement] = useState([])
     const [clients, setClient] = useState([])
+
+    const inputHandler = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value })
+    }
 
     const getAppartements = async()=>{
         await api.get('/appartement/getallappartement').then((Response)=>{
@@ -30,7 +35,6 @@ function UpdatePayment() {
     // get the specific appartment data
     const getOnePaiement = (id) => {
         api.get(`/paiement/getonepaiement/${id}`, {
-            // headers: { Authorization: `Bearer ${token}` },
         })
             .then((response) => {
                 setData(response.data)
@@ -40,6 +44,21 @@ function UpdatePayment() {
             })
     }
 
+   // update appartment
+    const updatePaiement = (e) => {
+    e.preventDefault()
+    api.put(`/paiement/updatepaiement/${params.id}`, data, {
+    })
+        .then((response) => {
+            navigate('/payments');
+        })
+        .catch((error) => {
+            console.log(error)
+            setMessage(error.response.data.message);
+        })
+    }
+
+    
     useEffect(() => {
         getOnePaiement(params.id)
         getClient()
@@ -47,23 +66,7 @@ function UpdatePayment() {
         console.log('clients',clients);
     }, [params.id])
 
- // update appartment
-     const updatePaiement = (e) => {
-    e.preventDefault()
-    api.put(`/paiement/updatepaiement/${params.id}`, data, {
-        // headers: { Authorization: `Bearer ${token}` },
-    })
-        .then((response) => {
-            navigate('/payments');
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-}
 
-const inputHandler = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value })
-}
 
     return (
         <>
@@ -72,6 +75,7 @@ const inputHandler = (e) => {
                     Update Client
                 </h1>
                 <form onSubmit={updatePaiement} className="w-full">
+                {message && <div className=' alert alert-danger mt-5 w-100 py-1 text-center border border-0 border-darck text-white'> {message}</div>}
                     <div className="form-group mb-6">
                         <label htmlFor="">Prix</label>
                         <input
@@ -94,17 +98,7 @@ const inputHandler = (e) => {
                             onChange={inputHandler}
                         />
                     </div>
-                    {/* <div className="form-group mb-6">
-                        <label htmlFor="">Appartement</label>
-                        <input
-                            type="text"
-                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-whitebg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-white focus:outline-none bg-gray-600"
-                            placeholder="tele"
-                            name='tele'
-                            value={data.tele}
-                            onChange={inputHandler}
-                        />
-                    </div> */}
+                   
                     <div className="form-group mb-6">
                         <label
                             for="countries"

@@ -9,12 +9,9 @@ function PaiementCard() {
     const params = useParams()
     const [data, setData] = useState({})
 
-    
-
     // get the specific appartment data
     const getOnePaiement = (id) => {
         api.get(`/paiement/getonepaiement/${id}`, {
-            // headers: { Authorization: `Bearer ${token}` },
         })
             .then((response) => {
                 setData(response.data)
@@ -26,9 +23,6 @@ function PaiementCard() {
 
     useEffect(() => {
         getOnePaiement(params.id)
-        // getClient()
-        // getAppartements()
-        // console.log('clients',clients);
     }, [params.id])
 
     const generatePDF = () => {
@@ -40,7 +34,6 @@ function PaiementCard() {
           }
         })
     }
-
 
     return (
         <>

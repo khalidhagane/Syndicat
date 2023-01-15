@@ -40,6 +40,10 @@ const GetOneClient = asyncHandler(async (req, res) => {
 // add formation
  const AddClient = asyncHandler(async (req, res) => {
     const { name, cin, tele, id_appartement } = req.body
+    if(!name || !cin || !tele || !id_appartement){
+        res.status(400)
+        return next({message:"Please add all fields"})
+    }
     try{
            const data = await ClientSchema.create({
             name,
@@ -63,6 +67,10 @@ const GetOneClient = asyncHandler(async (req, res) => {
  const UpdateClient = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
     const { name, cin, tele, id_appartement } = req.body
+    if(!name || !cin || !tele || !id_appartement){
+        res.status(400)
+        return next({message:"Please add all fields"})
+    }
     
         try{
             const data = await ClientSchema.findOne({_id: id})

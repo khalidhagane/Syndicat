@@ -2,9 +2,13 @@ import './home.css'
 import { useState } from 'react'
 import { api } from '../helpers/api'
 import { Navigate } from 'react-router-dom'
+import { UserContext } from '../context/UserContext'
+import { useContext } from 'react'
+
 
 function Home() {
 
+    const {setAuth} = useContext(UserContext)
     const [user, setUser] = useState({})
     
     // const [err, setErr] = useState('')
@@ -23,6 +27,7 @@ function Home() {
     
         api.post('/auth/login', user, { withCredentials: true })
             .then((response) => {
+                setAuth(response.data)
                 localStorage.setItem('token', response.data.token)
         //         const email = res.data.email
         //   const name = res.data.name
@@ -31,6 +36,7 @@ function Home() {
           localStorage.setItem("name", response.data.name)
                 setNoErr(true)
                 console.log(response)
+
             })
             .catch(err => {
                 console.log(err.response.data);
