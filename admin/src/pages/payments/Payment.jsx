@@ -52,7 +52,7 @@ function Payment() {
                         <table className="w-full">
                             <thead>
                                 <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-700 text-gray-400 bg-gray-800">
-                                    <th className="px-4 py-3">Prix</th>
+                                    <th className="px-4 py-3">Prix DH</th>
                                     <th className="px-4 py-3">Date</th>
                                     <th className="px-4 py-3">
                                         Appartement
@@ -69,7 +69,7 @@ function Payment() {
                                         <div className="flex items-center text-sm">
                                             <div>
                                                 <p className="font-semibold">
-                                                {item.prix}
+                                                {item.prix} 
                                                 </p>
                                             </div>
                                         </div>

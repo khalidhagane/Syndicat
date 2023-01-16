@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  server:
+    build: ./server
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+  admin:
+    build: ./admin
+    ports:
+      - "3000:3000"
+    depends_on:
+        # Starts up the server service before starting up the react service
+      - server
+    volumes:
+      - ./admin/src:/app/src

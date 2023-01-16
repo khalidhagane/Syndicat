@@ -31,7 +31,6 @@ function CreatePayment() {
         }
 
     const addPaiement = async(e)=>{
-        // console.log('paiemantrrr',data);
         e.preventDefault();
         api.post('/paiement/addpaiement',data)
         .then((response)=>{

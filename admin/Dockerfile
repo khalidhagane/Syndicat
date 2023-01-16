@@ -1,8 +1,8 @@
-FROM node
+FROM node:14
 
-WORKDIR /frontend
+WORKDIR /admin
 
-COPY package.json .
+COPY package.json ./admin
 
 RUN npm install
 

@@ -1,13 +1,13 @@
 FROM node:16
 
-WORKDIR /app
+WORKDIR /server
 
 COPY ["package.json", "package-lock.json*", "./"]
 
 RUN npm install
 
-COPY . .
+COPY . /server/
 
 EXPOSE 8081
 
-CMD ["nodemon"]    
+CMD ["npm","start"]    

@@ -3,9 +3,9 @@ project Sandycat with technology :
 
 ## Tech Stack
 
-**Client:** React, bootstrap
+**admin:** React, bootstrap
 
-**Server:** Node, Express
+**server:** Node, Express
 
 **database:** Mongodb
 

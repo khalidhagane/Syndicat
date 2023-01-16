@@ -25,7 +25,7 @@ const GetOnePaiement = asyncHandler(async (req, res) => {
     // console.log('GetOnePaiement',id);
         try{
             
-             const data = await PaiementSchema.findOne({_id:id})
+             const data = await PaiementSchema.findOne({_id:id}).populate("id_appartement").populate("id_client")
             res.status(200).send(data)
         } catch (error) {
             res.status(400)
@@ -37,7 +37,7 @@ const GetOnePaiement = asyncHandler(async (req, res) => {
 // url : /api/paiement/addpaiement
 // access : paiement
 // add paiement
- const AddPaiement = asyncHandler(async (req, res) => {
+ const AddPaiement = asyncHandler(async (req, res, next ) => {
     console.log('req',req.body);
     const { prix, date, id_appartement, id_client } = req.body
     if(!prix || !date || !id_appartement || !id_client){
@@ -64,7 +64,7 @@ const GetOnePaiement = asyncHandler(async (req, res) => {
 // url : /api/paiement/updatepaiement
 // access : paiement
 // update paiement
- const UpdatePaiement = asyncHandler( async(req,res)=>{
+ const UpdatePaiement = asyncHandler( async(req, res, next)=>{
     const id =  req.params.id;
     const { prix, date, id_appartement, id_client } = req.body
     if(!prix || !date || !id_appartement || !id_client){

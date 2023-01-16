@@ -63,7 +63,7 @@ console.log('GetOneAppartement',id);
 // url : /api/appartement/updateappartement
 // access : appartement
 // update appartement
- const UpdateAppartement = asyncHandler( async(req,res)=>{
+ const UpdateAppartement = asyncHandler( async(req, res, next)=>{
     const id =  req.params.id;
     const { imeuble, etage, appartement } = req.body
         if(!imeuble || !etage || !appartement){

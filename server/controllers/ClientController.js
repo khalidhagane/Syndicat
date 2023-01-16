@@ -38,7 +38,7 @@ const GetOneClient = asyncHandler(async (req, res) => {
 // url : /api/formation/addformation
 // access : formation
 // add formation
- const AddClient = asyncHandler(async (req, res) => {
+ const AddClient = asyncHandler(async (req, res, next) => {
     const { name, cin, tele, id_appartement } = req.body
     if(!name || !cin || !tele || !id_appartement){
         res.status(400)
@@ -64,7 +64,7 @@ const GetOneClient = asyncHandler(async (req, res) => {
 // url : /api/formation/updateFormation
 // access : formation
 // update Formation
- const UpdateClient = asyncHandler( async(req,res)=>{
+ const UpdateClient = asyncHandler( async(req, res, next)=>{
     const id =  req.params.id;
     const { name, cin, tele, id_appartement } = req.body
     if(!name || !cin || !tele || !id_appartement){
