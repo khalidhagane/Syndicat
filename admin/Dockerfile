@@ -1,8 +1,8 @@
-FROM node:14
+FROM node:16
 
 WORKDIR /admin
 
-COPY package.json ./admin
+COPY package.json .
 
 RUN npm install
 
