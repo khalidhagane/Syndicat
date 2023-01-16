@@ -41,7 +41,7 @@ const Login = asyncHandler(async (req,res, next) => {
                 name: findUser.name,
                 email : findUser.email,
                 token: crypto.randomBytes(64).toString('hex'),
-                message : 'login successfuly'
+                // message : 'login successfuly'
                 })
             }
             res.status(400)

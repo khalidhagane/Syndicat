@@ -6,11 +6,10 @@ import { api } from '../../helpers/api'
 function Appartment() {
 
               const [appartements, setAppartement] = useState([])
+              
                 const getAppartements = async()=>{
                     await api.get('/appartement/getallappartement').then((Response)=>{
                     setAppartement(Response.data);
-                    // console.log('data',Response.data)
-                    // console.log('Appartement',appartements)
                   }).catch((error)=>{
                     console.log(error);
                   })

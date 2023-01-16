@@ -16,7 +16,6 @@ function UpdateAppartment() {
     // get the specific appartment data
     const getOneAppartement = (id) => {
     api.get(`/appartement/getoneappartement/${id}`, {
-        // headers: { Authorization: `Bearer ${token}` },
     })
         .then((response) => {
             setData(response.data)

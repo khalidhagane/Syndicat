@@ -63,7 +63,7 @@ function UpdatePayment() {
         getOnePaiement(params.id)
         getClient()
         getAppartements()
-        console.log('clients',clients);
+        // console.log('clients',clients);
     }, [params.id])
 
 

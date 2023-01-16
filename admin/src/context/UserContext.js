@@ -9,7 +9,7 @@ const UserProvider = ({ children }) => {
 
     const [auth, setAuth] = useState({})
 
-   console.log('auth',auth);
+  //    console.log('auth',auth);
 
     return (
         <UserContext.Provider value={{auth, setAuth} }>

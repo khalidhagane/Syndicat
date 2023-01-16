@@ -24,9 +24,8 @@ const GetAllAppartement = asyncHandler(async (req, res) => {
 // get one appartement
 const GetOneAppartement = asyncHandler(async (req, res) => {
     const id = req.params.id
-console.log('GetOneAppartement',id);
+// console.log('GetOneAppartement',id);
     try{
-        
          const data = await AppartementSchema.findOne({_id:id})
         res.status(200).send(data)
     } catch (error) {
@@ -89,7 +88,6 @@ console.log('GetOneAppartement',id);
 // // delete appartement
 const DeleteAppartement = asyncHandler( async(req,res)=>{
     const id =  req.params.id;
-
     // console.log("id12",id);
     try {
          await AppartementSchema.findOneAndRemove({ _id:id})    

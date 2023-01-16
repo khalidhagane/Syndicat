@@ -88,7 +88,7 @@ function Client() {
                          {item.tele}
                          </td>
                          <td className="px-4 py-3 text-sm text-center">
-                         {item.id_appartement.appartement}
+                         {item.id_appartement?.appartement}
                          </td>
                          <td className="px-4 py-3 text-sm text-center">
                              <Link

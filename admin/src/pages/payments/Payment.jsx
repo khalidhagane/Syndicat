@@ -9,9 +9,8 @@ function Payment() {
                 const getPaiements = async()=>{
                     await api.get('/paiement/getallpaiement').then((Response)=>{
                     setPaiement(Response.data);
-                    console.log('data',Response.data)
-                    // console.log('Response.data',Response.data);
-                    console.log('Appartement',paiements)
+                    // console.log('data',Response.data)
+                    // console.log('Appartement',paiements)
                   }).catch((error)=>{
                     console.log(error);
                   })
@@ -22,7 +21,7 @@ function Payment() {
                   },[]);
 
                 const deletePaiement = async (id) =>{
-                    console.log("lllll",id);
+                    // console.log("lllll",id);
                     await  api.delete(`/paiement/deletepaiement/${id}`)
                     .then((response)=>{
                     getPaiements()
@@ -78,10 +77,10 @@ function Payment() {
                                     {item.date}
                                     </td>
                                     <td className="px-4 py-3 text-sm">
-                                    {item.id_appartement.appartement}
+                                    {item.id_appartement?.appartement}
                                     </td>
                                     <td className="px-4 py-3 text-sm">
-                                    {item.id_client.name}
+                                    {item.id_client?.name}
                                     </td>
                                     <td className="px-4 py-3 text-sm text-center">
                                     <Link

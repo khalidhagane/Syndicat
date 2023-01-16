@@ -28,17 +28,15 @@ function CreateClient() {
       },[]);
 
 
-
     const addClients = async(e)=>{
 
-        console.log('datatt', data);
         e.preventDefault();
         api.post('/client/addclient',data)
         .then((response)=>{
         //   console.log("kkkkkkkkkkdata",response.data);
         navigate('/clients');
         }).catch((error)=>{
-          console.log('errror',error);
+        //   console.log('errror',error);
           setMessage(error.response.data.message);
         })
       }

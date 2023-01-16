@@ -26,7 +26,7 @@ function PaiementCard() {
     }, [])
 
     const generatePDF = () => {
-    console.log('lllllll');
+    // console.log('lllllll');
         const doc = new jspdf('p', 'pt', 'a4')
         doc.html(document.querySelector('#paiment'), {
           callback: function (pdf) {

@@ -12,10 +12,6 @@ function Navbar() {
     return (
         <div className="fixed w-full flex items-center justify-between h-14 text-white z-10">
             <div className="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bgnavbar border-none pt-1 ">
-                {/* <img
-                    className="w-7 h-7 md:w-8 md:h-8 mr-2 rounded overflow-hidden"
-                    src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg"
-                /> */}
                 <span className="hidden md:block">{auth.name ? auth.name : 'Admin'} </span>
             </div>
             <div className="flex justify-between items-center h-14 bgnavbar header-right px-5 ">

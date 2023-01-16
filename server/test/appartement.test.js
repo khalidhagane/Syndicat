@@ -13,12 +13,12 @@ describe("POST api/auth/login",() =>{
         expect(response.statusCode).toBe(400)
     })
 
-    test("should res with a 201 status code, email and password correct",async () =>{
+    test("should res with a 400 status code",async () =>{
         const response = await supertest(app).post("/api/auth/login").send({
-            email:"Khagane10@gmail.com",
-            password:"khalid10"
+            email:"khagane10@gmail.com",
+            password:""
         })
-        expect(response.statusCode).toBe(201)
+        expect(response.statusCode).toBe(400)
     })
 
     test("should res with a 400 status code, check status",async () =>{
@@ -28,6 +28,24 @@ describe("POST api/auth/login",() =>{
         })
         expect(response.statusCode).toBe(400)
     })
+
+    test("should res with a 400 status code",async () =>{
+        const response = await supertest(app).post("/api/auth/login").send({
+            email:"khagane10@gmail.com",
+            password:"kh"
+        })
+        expect(response.statusCode).toBe(400)
+    })
+
+    test("should res with a 201 status code, email and password correct",async () =>{
+        const response = await supertest(app).post("/api/auth/login").send({
+            email:"khagane10@gmail.com",
+            password:"khalid10"
+        })
+        expect(response.statusCode).toBe(201)
+    })
+
+    
 })
 
 //----------------------------------------------------- test add appartement  ------------------------------------------------------------------------
@@ -80,27 +98,41 @@ describe("POST api/auth/login",() =>{
             expect(response.statusCode).toBe(200)
         })
 
-                                // test("should res with a 400 status code",async () =>{
-                                //     const response = await supertest(app).get("/api/appartement/getoneappartement/63b40823f4796c6b9cf900bb").send({
-                                    
-                                //     })
-                                //     expect(response.statusCode).toBe(400)
-                                // })
     })
 
     //--------------------- test update appartement-----------------
-    // describe("update api/appartement/updateappartement   ",() =>{
+    describe("update api/appartement/updateappartement   ",() =>{
 
-    //     test("should res with a 400 status code",async () =>{
-    //         const response = await supertest(app).put("/api/appartement/updateappartement/63b40823f4796c6b9cf900bb").send({
-    //             imeuble:"A1",
-    //             etage:"A1",
-    //             appartement:"A1"
-    //         })
-    //         expect(response.statusCode).toBe(200)
-    //     })
+        test("should res with a 400 status code",async () =>{
+            const response = await supertest(app).put("/api/appartement/updateappartement/63b40823f4796c6b9cf900bb").send({
+                imeuble:"",
+                etage:"A1",
+                appartement:"A1"
+            })
+            expect(response.statusCode).toBe(400)
+        })
 
-    // })
+        test("should res with a 400 status code",async () =>{
+            const response = await supertest(app).put("/api/appartement/updateappartement/63b40823f4796c6b9cf900bb").send({
+                imeuble:"",
+                etage:"",
+                appartement:""
+            })
+            expect(response.statusCode).toBe(400)
+        })
+
+        // test("should res with a 200 status code",async () =>{
+        //     const response = await supertest(app).put("/api/appartement/updateappartement/63b40823f4796c6b9cf900bb").send({
+        //         imeuble:"",
+        //         etage:"",
+        //         appartement:""
+        //     })
+        //     expect(response.statusCode).toBe(200)
+        // })
+
+    })
+
+
 
     //----------------------------------------- test add paiement ----------------------------------------------------------------------------
 
@@ -112,6 +144,16 @@ describe("POST api/auth/login",() =>{
             date:"",
             id_appartement:"",
             id_client:""
+        })
+        expect(response.statusCode).toBe(400)
+    })
+
+    test("should res with a 400 status code",async () =>{
+        const response = await supertest(app).post("/api/paiement/addpaiement").send({
+            prix:"",
+            date:"2022-12-12",
+            id_appartement:"63b40823f4796c6b9cf900bb",
+            id_client:"63b335c1ec3bb6c2d0602f90"
         })
         expect(response.statusCode).toBe(400)
     })
@@ -150,20 +192,42 @@ describe("POST api/auth/login",() =>{
     })
 
     //     //--------------------- test update paiement- ----------------
-    // describe("update api/paiement/updatepaiement   ",() =>{
+    describe("update api/paiement/updatepaiement   ",() =>{
 
-    //     test("should res with a 400 status code",async () =>{
-    //         const response = await supertest(app).put("/api/paiement/updatepaiement/63b40823f4796c6b9cf900bb").send({
-    //             prix:"23",
-    //            date:"2022-12-12",
-    //            id_appartement:"63b40823f4796c6b9cf900bb",
-    //            id_client:"63b335c1ec3bb6c2d0602f90"
-    //         })
-    //         expect(response.statusCode).toBe(200)
-    //     })
+        test("should res with a 400 status code",async () =>{
+            const response = await supertest(app).put("/api/paiement/updatepaiement/63b40823f4796c6b9cf900bb").send({
+                prix:"",
+               date:"",
+               id_appartement:"",
+               id_client:""
+            })
+            expect(response.statusCode).toBe(400)
+        })
 
-    // })
+        test("should res with a 400 status code",async () =>{
+            const response = await supertest(app).put("/api/paiement/updatepaiement/63b40823f4796c6b9cf900bb").send({
+                prix:"",
+               date:"2022-12-12",
+               id_appartement:"63b40823f4796c6b9cf900bb",
+               id_client:"63b335c1ec3bb6c2d0602f90"
+            })
+            expect(response.statusCode).toBe(400)
+        })
 
+        // test("should res with a 200 status code",async () =>{
+        //     const response = await supertest(app).put("/api/paiement/updatepaiement/63b40823f4796c6b9cf900bb").send({
+        //         prix:"",
+        //        date:"",
+        //        id_appartement:"",
+        //        id_client:""
+        //     })
+        //     expect(response.statusCode).toBe(200)
+        // })
+
+    })
+
+
+    
     //------------------------------------------------------- add client------------------------------------------------------------------------
 
     describe("POST api/client/addclient   ",() =>{
@@ -174,6 +238,16 @@ describe("POST api/auth/login",() =>{
                 cin:"",
                 tele:"",
                 id_appartement:""
+            })
+            expect(response.statusCode).toBe(400)
+        })
+
+        test("should res with a 200 status code",async () =>{
+            const response = await supertest(app).post("/api/client/addclient").send({
+                name:"",
+                cin:"HA202212",
+                tele:"636654767",
+                id_appartement:"63b335c1ec3bb6c2d0602f90"
             })
             expect(response.statusCode).toBe(400)
         })
@@ -212,17 +286,37 @@ describe("POST api/auth/login",() =>{
         })
     
         //     //--------------------- test update client- ----------------
-        // describe("update api/client/updatelient   ",() =>{
+        describe("update api/client/updatelient   ",() =>{
     
-        //     test("should res with a 400 status code",async () =>{
-        //         const response = await supertest(app).put("/api/client/updateclient/63b40823f4796c6b9cf900bb").send({
-        //              name:"khalid",
-                        // cin:"HA202778",
-                        // tele:"0456775467",
-                        // id_appartement:"63b335c1ec3bb6c2d0602f90"
-        //         })
-        //         expect(response.statusCode).toBe(200)
-        //     })
+            test("should res with a 400 status code",async () =>{
+                const response = await supertest(app).put("/api/client/updateclient/63b40823f4796c6b9cf900bb").send({
+                     name:"",
+                        cin:"",
+                        tele:"",
+                        id_appartement:""
+                })
+                expect(response.statusCode).toBe(400)
+            })
+
+            test("should res with a 400 status code",async () =>{
+                const response = await supertest(app).put("/api/client/updateclient/63b40823f4796c6b9cf900bb").send({
+                     name:"",
+                        cin:"HA202778",
+                        tele:"0456775467",
+                        id_appartement:"63b335c1ec3bb6c2d0602f90"
+                })
+                expect(response.statusCode).toBe(400)
+            })
+
+            // test("should res with a 200 status code",async () =>{
+            //     const response = await supertest(app).put("/api/client/updateclient/63b40823f4796c6b9cf900bb").send({
+            //          name:"",
+            //             cin:"",
+            //             tele:"",
+            //             id_appartement:""
+            //     })
+            //     expect(response.statusCode).toBe(200)
+            // })
     
-        // })
+        })
     

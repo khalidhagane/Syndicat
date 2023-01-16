@@ -10,11 +10,8 @@ function Home() {
 
     const {setAuth} = useContext(UserContext)
     const [user, setUser] = useState({})
-    
-    // const [err, setErr] = useState('')
 
     const [noErr, setNoErr] = useState(false)
-
     const [message,setMessage] = useState(false);
     
     const inputHandler = (e) => {
@@ -29,17 +26,13 @@ function Home() {
             .then((response) => {
                 setAuth(response.data)
                 localStorage.setItem('token', response.data.token)
-        //         const email = res.data.email
-        //   const name = res.data.name
-        //   localStorage.setItem("role", roles)
-          localStorage.setItem("email", response.data.email)
-          localStorage.setItem("name", response.data.name)
+
                 setNoErr(true)
-                console.log(response)
+                // console.log(response)
 
             })
             .catch(err => {
-                console.log(err.response.data);
+                // console.log(err.response.data);
                 setNoErr(false)
                 setMessage(err.response.data.message);
               })
@@ -52,7 +45,6 @@ function Home() {
                 <div className="max-w-md w-full  rounded p-6 space-y-4">
                     <div className="mb-4">  
                         <h2 className="text-xl font-bold text-white text-center">Sign In</h2>
-                        {/* <p className='text-center text-red-300'>{ err }</p> */}
                     </div>
                     <form onSubmit={ login }>
                     {message && <div className=' alert alert-danger mt-5 w-100 py-1 text-center border border-0 border-darck text-white'> {message}</div>}
